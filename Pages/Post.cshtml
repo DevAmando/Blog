@@ -1,0 +1,51 @@
+@page "/post/{id:int}"
+@model Blog.Pages.PostModel
+@{
+    ViewData["Title"] = Model.Post?.Title ?? "Post não encontrado";
+}
+
+@if (Model.Post == null)
+{
+    <div class="empty-state">
+        <h2>Post não encontrado</h2>
+        <p>O post que você está procurando não existe ou foi removido.</p>
+        <a asp-page="/Index" class="btn">Voltar para o início</a>
+    </div>
+}
+else
+{
+    <div class="post-detail">
+        <div class="post-header">
+            <h1>@Model.Post.Title</h1>
+            <div class="post-meta">
+                @if (Model.Post.Category != null)
+                {
+                    <a asp-page="/Category" asp-route-slug="@Model.Post.Category.Slug" class="category-badge">
+                        📁 @Model.Post.Category.Name
+                    </a>
+                }
+                @if (Model.Post.Author != null)
+                {
+                    <span>✍️ @Model.Post.Author.Name</span>
+                }
+                <span>📅 @Model.Post.LastUpdateDate.ToString("dd/MM/yyyy 'às' HH:mm")</span>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.Post.Summary))
+        {
+            <div class="post-summary" style="font-size: 1.2rem; font-style: italic; color: var(--text-light); margin-bottom: 2rem; padding: 1rem; background: var(--bg-light); border-left: 4px solid var(--primary-color); border-radius: 4px;">
+                @Model.Post.Summary
+            </div>
+        }
+
+        <div class="post-body">
+            @Html.Raw(Model.Post.Body?.Replace("\n", "<br />"))
+        </div>
+
+        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
+            <a asp-page="/Index" class="btn btn-secondary">← Voltar para a lista</a>
+        </div>
+    </div>
+}
+

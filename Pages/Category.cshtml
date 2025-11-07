@@ -1,0 +1,50 @@
+@page "/category/{slug}"
+@model Blog.Pages.CategoryModel
+@{
+    ViewData["Title"] = Model.CategoryName ?? "Categoria";
+}
+
+@if (string.IsNullOrEmpty(Model.CategoryName))
+{
+    <div class="empty-state">
+        <h2>Categoria não encontrada</h2>
+        <p>A categoria que você está procurando não existe.</p>
+        <a asp-page="/Index" class="btn">Voltar para o início</a>
+    </div>
+}
+else
+{
+    <div style="margin-bottom: 2rem;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Categoria: @Model.CategoryName</h1>
+        <p style="color: var(--text-light);">@Model.Posts.Count() post(s) encontrado(s)</p>
+    </div>
+
+    @if (!Model.Posts.Any())
+    {
+        <div class="empty-state">
+            <h2>Nenhum post nesta categoria</h2>
+            <p>Não há posts disponíveis nesta categoria no momento.</p>
+            <a asp-page="/Index" class="btn">Ver todos os posts</a>
+        </div>
+    }
+    else
+    {
+        <div class="posts-grid">
+            @foreach (var post in Model.Posts)
+            {
+                <a asp-page="/Post" asp-route-id="@post.Id" class="post-card">
+                    <h2>@post.Title</h2>
+                    @if (!string.IsNullOrEmpty(post.Summary))
+                    {
+                        <p class="post-summary">@post.Summary</p>
+                    }
+                    <div class="post-meta">
+                        <span>✍️ @post.Author</span>
+                        <span>📅 @post.LastUpdateDate.ToString("dd/MM/yyyy")</span>
+                    </div>
+                </a>
+            }
+        </div>
+    }
+}
+

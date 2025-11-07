@@ -9,8 +9,10 @@ namespace Blog.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }   
+        public DbSet<Tag>  Tags  { get; set; }
 
-        // Construtor que aceita DbContextOptions para funcionar com DI
+        
         public BlogDataContext(DbContextOptions<BlogDataContext> options)
             : base(options)
         {

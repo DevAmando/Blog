@@ -1,0 +1,38 @@
+@page
+@model Blog.Pages.IndexModel
+@{
+    ViewData["Title"] = "Início";
+}
+
+<div class="hero">
+    <h1>Bem-vindo ao Blog</h1>
+    <p>Descubra artigos incríveis sobre diversos temas</p>
+</div>
+
+@if (Model.Posts == null || !Model.Posts.Any())
+{
+    <div class="empty-state">
+        <h2>Nenhum post encontrado</h2>
+        <p>Não há posts disponíveis no momento.</p>
+    </div>
+}
+else
+{
+    <div class="posts-grid">
+        @foreach (var post in Model.Posts)
+        {
+            <a asp-page="/Post" asp-route-id="@post.Id" class="post-card">
+                <h2>@post.Title</h2>
+                @if (!string.IsNullOrEmpty(post.Summary))
+                {
+                    <p class="post-summary">@post.Summary</p>
+                }
+                <div class="post-meta">
+                    <span>📁 @post.Category</span>
+                    <span>✍️ @post.Author</span>
+                    <span>📅 @post.LastUpdateDate.ToString("dd/MM/yyyy")</span>
+                </div>
+            </a>
+        }
+    </div>
+}

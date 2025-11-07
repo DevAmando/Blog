@@ -2,11 +2,13 @@ using Blog.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Blog.Attributes;
 
 namespace Blog.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
 
     public class HomeController : ControllerBase
     {
@@ -18,9 +20,11 @@ namespace Blog.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult Get()
+        public IActionResult Get([FromServices]IConfiguration config)
         {
-            return Ok("API is running...");
+            var env = config.GetValue<string>("Env");
+
+            return Ok(new { environment = env});
         }
     }
 }

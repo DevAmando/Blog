@@ -1,0 +1,35 @@
+# Exemplo de configurações para diferentes cenários de teste
+
+# Para executar testes específicos, você pode usar:
+
+# 1. Teste básico de leitura (apenas visualização)
+# locust -f locustfile.py --headless -u 20 -r 5 -t 2m BlogUser
+
+# 2. Teste de carga pesada (muitos usuários simultâneos)
+# locust -f locustfile.py --headless -u 100 -r 10 -t 5m BlogUser
+
+# 3. Teste de stress (aumento gradual)
+# locust -f locustfile.py --headless -u 50 -r 2 -t 10m BlogUser
+
+# 4. Teste de autenticação e escrita
+# locust -f locustfile.py --headless -u 10 -r 2 -t 3m AuthenticatedUser
+
+# 5. Teste de registro de usuários
+# locust -f locustfile.py --headless -u 5 -r 1 -t 2m RegistrationUser
+
+# 6. Teste de fluxo sequencial
+# locust -f locustfile.py --headless -u 15 -r 3 -t 3m SequentialBlogUser
+
+# 7. Teste combinado (todos os tipos de usuário)
+# locust -f locustfile.py --headless -u 30 -r 5 -t 5m
+
+# Parâmetros:
+# -u: número total de usuários
+# -r: taxa de spawn (usuários por segundo)
+# -t: duração do teste (ex: 60s, 5m, 1h)
+# --headless: executa sem interface web
+# -f: arquivo locustfile
+
+
+
+

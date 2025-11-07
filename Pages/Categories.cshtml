@@ -1,0 +1,33 @@
+@page "/categories"
+@model Blog.Pages.CategoriesModel
+@{
+    ViewData["Title"] = "Categorias";
+}
+
+<div class="hero">
+    <h1>Categorias</h1>
+    <p>Explore posts por categoria</p>
+</div
+
+@if (Model.Categories == null || !Model.Categories.Any())
+{
+    <div class="empty-state">
+        <h2>Nenhuma categoria encontrada</h2>
+        <p>Não há categorias disponíveis no momento.</p>
+    </div>
+}
+else
+{
+    <div class="categories-list">
+        @foreach (var category in Model.Categories)
+        {
+            <a asp-page="/Category" asp-route-slug="@category.Slug" class="category-card">
+                <h3>@category.Name</h3>
+                <p style="color: var(--text-light); margin-top: 0.5rem;">
+                    @category.PostsCount post(s)
+                </p>
+            </a>
+        }
+    </div>
+}
+
